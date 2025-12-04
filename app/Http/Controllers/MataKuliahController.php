@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class MataKuliahController extends Controller
 {
     /**
-     * Menampilkan daftar mata kuliah
+     * Display a listing of the resource.
      */
     public function index()
     {
@@ -24,7 +24,7 @@ class MataKuliahController extends Controller
     }
 
     /**
-     * Menampilkan form create
+     * Show the form for creating a new resource.
      */
     public function create()
     {
@@ -36,7 +36,7 @@ class MataKuliahController extends Controller
     }
 
     /**
-     * Menyimpan data baru
+     * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
@@ -52,7 +52,7 @@ class MataKuliahController extends Controller
             'sks' => $request->sks,
         ]);
 
-        // Redirect ke halaman list
+        // Redirect ke halaman list dengan pesan sukses
         return redirect()->route('matakuliah.index')
                          ->with('success', 'Mata kuliah berhasil ditambahkan!');
     }

@@ -12,6 +12,13 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/user/create">Create User</a>
                 </li>
+                <!-- TAMBAHKAN MENU MATA KULIAH -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('matakuliah.index') }}">Mata Kuliah</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('matakuliah.create') }}">Tambah MK</a>
+                </li>
             </ul>
         </div>
     </div>
