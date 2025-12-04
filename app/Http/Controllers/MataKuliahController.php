@@ -12,7 +12,6 @@ class MataKuliahController extends Controller
      */
     public function index()
     {
-        // Ambil semua data mata kuliah
         $mks = MataKuliah::all();
         
         $data = [
@@ -40,20 +39,62 @@ class MataKuliahController extends Controller
      */
     public function store(Request $request)
     {
-        // Validasi input
         $request->validate([
             'nama_mk' => 'required|string|max:100',
             'sks' => 'required|integer|min:1|max:10',
         ]);
 
-        // Simpan ke database
         MataKuliah::create([
             'nama_mk' => $request->nama_mk,
             'sks' => $request->sks,
         ]);
 
-        // Redirect ke halaman list dengan pesan sukses
         return redirect()->route('matakuliah.index')
                          ->with('success', 'Mata kuliah berhasil ditambahkan!');
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit($id)
+    {
+        $mk = MataKuliah::findOrFail($id);
+        $data = [
+            'title' => 'Edit Mata Kuliah',
+            'mk' => $mk,
+        ];
+        return view('edit_mk', $data);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'nama_mk' => 'required|string|max:100',
+            'sks' => 'required|integer|min:1|max:10',
+        ]);
+
+        $mk = MataKuliah::findOrFail($id);
+        $mk->update([
+            'nama_mk' => $request->nama_mk,
+            'sks' => $request->sks,
+        ]);
+
+        return redirect()->route('matakuliah.index')
+                         ->with('success', 'Data mata kuliah berhasil diperbarui!');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy($id)
+    {
+        $mk = MataKuliah::findOrFail($id);
+        $mk->delete();
+
+        return redirect()->route('matakuliah.index')
+                         ->with('success', 'Data mata kuliah berhasil dihapus!');
     }
 }

@@ -1,3 +1,4 @@
+{{-- PASTIKAN SEPERTI INI --}}
 @extends('layouts.app')
 
 @section('content')
@@ -10,39 +11,36 @@
         </div>
     @endif
     
-    <div class="mb-3">
-        <a href="{{ route('matakuliah.create') }}" class="btn btn-success">
-            <i class="fas fa-plus"></i> Tambah Mata Kuliah Baru
-        </a>
-    </div>
+    <a href="{{ route('matakuliah.create') }}" class="btn btn-success mb-3">
+        + Tambah Mata Kuliah Baru
+    </a>
 
-    <div class="table-responsive">
-        <table class="table table-striped table-bordered table-hover">
-            <thead class="table-dark">
-                <tr>
-                    <th width="5%">No</th>
-                    <th>Nama Mata Kuliah</th>
-                    <th width="10%">SKS</th>
-                    <th width="15%">ID (UUID)</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($mks as $index => $mk)
-                <tr>
-                    <td>{{ $index + 1 }}</td>
-                    <td>{{ $mk->nama_mk }}</td>
-                    <td class="text-center">{{ $mk->sks }}</td>
-                    <td><small>{{ substr($mk->id, 0, 8) }}...</small></td>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan="4" class="text-center text-muted">
-                        <i class="fas fa-info-circle"></i> Belum ada data mata kuliah
-                    </td>
-                </tr>
-                @endforelse
-            </tbody>
-        </table>
-    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Nama Mata Kuliah</th>
+                <th>SKS</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($mks as $mk)
+            <tr>
+                <td>{{ $loop->iteration }}</td>
+                <td>{{ $mk->nama_mk }}</td>
+                <td>{{ $mk->sks }}</td>
+                <td>
+                    <a href="{{ route('matakuliah.edit', $mk->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                    <form action="{{ route('matakuliah.destroy', $mk->id) }}" method="POST" class="d-inline">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin?')">Hapus</button>
+                    </form>
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
 </div>
 @endsection

@@ -24,5 +24,20 @@
             @endforeach
         </tbody>
     </table>
+    <!-- Tambahkan kolom Aksi di thead -->
+<th>Aksi</th>
+
+<!-- Tambahkan di tbody -->
+<td>
+    <a href="{{ route('user.edit', $user->id) }}" class="btn btn-warning btn-sm">Edit</a>
+    <form action="{{ route('user.destroy', $user->id) }}" method="POST" class="d-inline">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="btn btn-danger btn-sm" 
+                onclick="return confirm('Yakin hapus user {{ $user->nama }}?')">
+            Hapus
+        </button>
+    </form>
+</td>
 </div>
 @endsection
